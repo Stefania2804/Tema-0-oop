@@ -8,7 +8,6 @@ public class Board {
     private final ArrayList<ArrayList<CardInput>> board;
 
     public Board(int rows, int columns) {
-        // Creează structura bidimensională și inițializează fiecare poziție cu `null`
         board = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
             ArrayList<CardInput> row = new ArrayList<>();
