@@ -17,7 +17,7 @@ public class Board {
             board.add(row);
         }
     }
-
+    
     public int placeOnBoard(CardInput card, Player player) {
         if (player.getMana() >= card.getMana()) {
             String name = card.getName();
