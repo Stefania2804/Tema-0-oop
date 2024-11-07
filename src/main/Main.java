@@ -172,7 +172,7 @@ public final class Main {
                         commandNode.put("playerIdx", playerIdx);
                         ArrayNode cardsArray = objectMapper.createArrayNode();
                         for (CardInput cardInput : deck) {
-                            cardsArray.add(objectMapper.valueToTree(cardInput));  // Convertește `Card` în JSON și adaugă-l în ArrayNode
+                            cardsArray.add(objectMapper.valueToTree(cardInput));
                         }
 
                         commandNode.set("output", cardsArray);
