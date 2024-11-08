@@ -115,6 +115,13 @@
   "playerIdx" : 1,
   "output" : 17
 }, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 2,
+    "y" : 1
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
   "command" : "getCardAtPosition",
   "x" : 0,
   "y" : 0,
@@ -174,7 +181,7 @@
   } ], [ {
     "mana" : 1,
     "attackDamage" : 6,
-    "health" : 3,
+    "health" : 1,
     "description" : "Premium card: Insanity is always an option, now it is an absolute.",
     "colors" : [ "Red", "Black" ],
     "name" : "Miraj"
@@ -188,7 +195,7 @@
   }, {
     "mana" : 2,
     "attackDamage" : 6,
-    "health" : 3,
+    "health" : 2,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Yellow", "Orange", "Red" ],
     "name" : "Miraj"
@@ -259,11 +266,32 @@
     "name" : "Disciple"
   }
 }, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 3,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 2,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getCardAtPosition",
   "x" : 3,
@@ -280,6 +308,20 @@
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 3,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 2,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
   "output" : 1
@@ -288,6 +330,20 @@
   "x" : 0,
   "y" : 0,
   "output" : "No card available at that position."
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 3,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 2,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
@@ -377,6 +433,17 @@
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
+  "command" : "cardUsesAbility",
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 0,
+    "y" : 1
+  },
+  "error" : "Attacker card has already attacked this turn."
+}, {
   "command" : "getPlayerTurn",
   "output" : 2
 }, {
@@ -446,7 +513,7 @@
   "output" : {
     "mana" : 2,
     "attackDamage" : 7,
-    "health" : 5,
+    "health" : 7,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Black", "White", "Green" ],
     "name" : "Warden"
@@ -469,7 +536,7 @@
   "output" : {
     "mana" : 2,
     "attackDamage" : 7,
-    "health" : 5,
+    "health" : 9,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Black", "White", "Green" ],
     "name" : "Warden"
@@ -478,6 +545,17 @@
   "command" : "getPlayerMana",
   "playerIdx" : 1,
   "output" : 62
+}, {
+  "command" : "cardUsesAbility",
+  "cardAttacker" : {
+    "x" : 3,
+    "y" : 4
+  },
+  "cardAttacked" : {
+    "x" : 1,
+    "y" : 1
+  },
+  "error" : "Attacker card has already attacked this turn."
 }, {
   "command" : "getCardAtPosition",
   "x" : 0,
@@ -488,13 +566,20 @@
   "playerIdx" : 2,
   "output" : 82
 }, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 1
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
   "command" : "getCardAtPosition",
   "x" : 2,
   "y" : 0,
   "output" : {
     "mana" : 2,
     "attackDamage" : 7,
-    "health" : 5,
+    "health" : 9,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Black", "White", "Green" ],
     "name" : "Warden"
@@ -516,6 +601,20 @@
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 1
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 3
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "cardUsesAttack",
   "cardAttacker" : {
@@ -544,6 +643,20 @@
   },
   "error" : "Attacked card is not of type 'Tank'."
 }, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 1
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
   "command" : "getPlayerTurn",
   "output" : 2
 }, {
@@ -553,11 +666,32 @@
   "output" : {
     "mana" : 2,
     "attackDamage" : 7,
-    "health" : 5,
+    "health" : 9,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Black", "White", "Green" ],
     "name" : "Warden"
   }
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 2,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 3,
+    "y" : 1
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 3,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getPlayerTurn",
   "output" : 1
@@ -566,6 +700,13 @@
   "x" : 0,
   "y" : 0,
   "output" : "No card available at that position."
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ ], [ {
@@ -585,7 +726,7 @@
   } ], [ {
     "mana" : 2,
     "attackDamage" : 7,
-    "health" : 5,
+    "health" : 9,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Black", "White", "Green" ],
     "name" : "Warden"

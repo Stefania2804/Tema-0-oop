@@ -12,7 +12,7 @@ public class Player {
     private int mana;
     private int turn;
     private ArrayList<CardInput> cardsUsedThisTour;
-    private final ArrayList<CardInput> frozenCards;
+    private ArrayList<CardInput> frozenCards;
 
     public Player(int index, ArrayList<CardInput> deck, CardInput hero) {
         this.index = index;
