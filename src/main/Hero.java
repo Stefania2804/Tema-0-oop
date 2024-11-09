@@ -4,7 +4,7 @@ import fileio.CardInput;
 
 import java.util.ArrayList;
 
-public class Hero {
+public final class Hero {
     private int mana;
     private String description;
     private ArrayList<String> colors;
@@ -14,12 +14,12 @@ public class Hero {
     public Hero() {
 
     }
-    public Hero(CardInput cardInput) {
+    public Hero(final CardInput cardInput) {
         this.mana = cardInput.getMana();
         this.description = cardInput.getDescription();
         this.colors = new ArrayList<>(cardInput.getColors());
         this.name = cardInput.getName();
-        this.health = 30;
+        this.health = Constants.HEALTHHERO.getValue();
     }
 
 
@@ -59,7 +59,7 @@ public class Hero {
         return health;
     }
 
-    public void setHealth(int health) {
+    public void setHealth(final int health) {
         this.health = health;
     }
 

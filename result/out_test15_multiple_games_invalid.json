@@ -3,6 +3,12 @@
   "playerIdx" : 2,
   "output" : 0
 }, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
   "command" : "getCardAtPosition",
   "x" : 1,
   "y" : 0,
@@ -39,11 +45,18 @@
   "output" : {
     "mana" : 1,
     "attackDamage" : 6,
-    "health" : 2,
+    "health" : 3,
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "White" ],
     "name" : "Sentinel"
   }
+}, {
+  "command" : "useHeroAbility",
+  "affectedRow" : 2,
+  "error" : "Selected row does not belong to the current player."
+}, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
@@ -59,6 +72,9 @@
     "colors" : [ "Black", "Grey", "Blue" ],
     "name" : "Sentinel"
   }
+}, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
@@ -70,7 +86,7 @@
   "output" : {
     "mana" : 1,
     "attackDamage" : 6,
-    "health" : 2,
+    "health" : 3,
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "White" ],
     "name" : "Sentinel"
@@ -78,10 +94,13 @@
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 15
+  "output" : 12
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
+}, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
 }, {
   "command" : "getCardAtPosition",
   "x" : 3,
@@ -101,19 +120,43 @@
   "output" : {
     "mana" : 1,
     "attackDamage" : 6,
-    "health" : 2,
+    "health" : 3,
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "White" ],
     "name" : "Sentinel"
   }
 }, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ {
+    "attackDamage" : 6,
+    "health" : 3,
+    "mana" : 1,
+    "name" : "Sentinel",
+    "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
+    "colors" : [ "Black", "White" ]
+  }, {
+    "attackDamage" : 0,
+    "health" : 3,
+    "mana" : 1,
+    "name" : "The Cursed One",
+    "description" : "Standard card: Thrown from the highest cliff, revenge will be his glory.",
+    "colors" : [ "Pink", "Purple" ]
+  } ]
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 1
+  },
+  "error" : "Attacker card is frozen."
+}, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 21
+  "output" : 18
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : 17
+  "output" : 15
 }, {
   "command" : "useAttackHero",
   "cardAttacker" : {
@@ -128,11 +171,18 @@
   "output" : {
     "mana" : 1,
     "attackDamage" : 6,
-    "health" : 2,
+    "health" : 3,
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "White" ],
     "name" : "Sentinel"
   }
+}, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
+  "command" : "useHeroAbility",
+  "affectedRow" : 2,
+  "error" : "Selected row does not belong to the current player."
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
@@ -153,7 +203,7 @@
   "output" : [ [ {
     "mana" : 1,
     "attackDamage" : 6,
-    "health" : 2,
+    "health" : 3,
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "White" ],
     "name" : "Sentinel"
@@ -326,6 +376,9 @@
   "playerIdx" : 1,
   "output" : 1
 }, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
   "command" : "getCardAtPosition",
   "x" : 0,
   "y" : 0,
@@ -352,6 +405,9 @@
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
   "command" : "getCardAtPosition",
   "x" : 0,
   "y" : 0,
@@ -359,7 +415,7 @@
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 12
+  "output" : 8
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
@@ -375,6 +431,9 @@
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
   }
+}, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
 }, {
   "command" : "cardUsesAttack",
   "cardAttacker" : {
@@ -427,6 +486,9 @@
   "y" : 0,
   "output" : "No card available at that position."
 }, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
   "command" : "getPlayerTurn",
   "output" : 2
 }, {
@@ -462,6 +524,10 @@
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
+  "command" : "useHeroAbility",
+  "affectedRow" : 3,
+  "error" : "Selected row does not belong to the enemy."
+}, {
   "command" : "cardUsesAttack",
   "cardAttacker" : {
     "x" : 2,
@@ -478,7 +544,7 @@
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 42
+  "output" : 34
 }, {
   "command" : "getPlayerTurn",
   "output" : 1
@@ -490,10 +556,13 @@
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 52
+  "output" : 44
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
+}, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
@@ -521,11 +590,14 @@
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : 52
+  "output" : 49
+}, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 72
+  "output" : 64
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
@@ -544,7 +616,10 @@
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : 62
+  "output" : 59
+}, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
 }, {
   "command" : "cardUsesAbility",
   "cardAttacker" : {
@@ -564,7 +639,7 @@
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 82
+  "output" : 70
 }, {
   "command" : "useAttackHero",
   "cardAttacker" : {
@@ -590,14 +665,17 @@
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 92
+  "output" : 80
+}, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
 }, {
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : 82
+  "output" : 76
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
@@ -632,6 +710,9 @@
   "y" : 0,
   "output" : "No card available at that position."
 }, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
   "command" : "cardUsesAttack",
   "cardAttacker" : {
     "x" : 1,
@@ -640,6 +721,17 @@
   "cardAttacked" : {
     "x" : 3,
     "y" : 3
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
+  "command" : "cardUsesAbility",
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 3,
+    "y" : 0
   },
   "error" : "Attacked card is not of type 'Tank'."
 }, {
@@ -672,27 +764,6 @@
     "name" : "Warden"
   }
 }, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 2,
-    "y" : 0
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 3,
-    "y" : 1
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 3,
-    "y" : 0
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
@@ -709,21 +780,7 @@
   "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getCardsOnTable",
-  "output" : [ [ ], [ {
-    "mana" : 1,
-    "attackDamage" : 4,
-    "health" : 8,
-    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
-    "colors" : [ "Brown", "Black", "Grey" ],
-    "name" : "Goliath"
-  }, {
-    "mana" : 2,
-    "attackDamage" : 6,
-    "health" : 3,
-    "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
-    "colors" : [ "Yellow", "Orange", "Red" ],
-    "name" : "Miraj"
-  } ], [ {
+  "output" : [ [ ], [ ], [ {
     "mana" : 2,
     "attackDamage" : 7,
     "health" : 9,
