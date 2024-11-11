@@ -8,27 +8,25 @@ import java.util.ArrayList;
 public final class Player {
     private int index;
     private ArrayList<CardInput> deck;
-    private ArrayList<CardInput> cards_in_hand;
-    private CardInput hero;
+    private ArrayList<Card> cards_in_hand;
+    private Hero hero;
     private int mana;
-    private int turn;
-    private ArrayList<CardInput> cardsUsedThisTour;
-    private ArrayList<CardInput> frozenCards;
-    private ArrayList<CardInput> stillFrozenCards;
+    private ArrayList<Card> cardsUsedThisTour;
+    private ArrayList<Card> frozenCards;
+    private ArrayList<Card> stillFrozenCards;
     private int heroUsed;
     private int wonGames;
-    private int playedGames;
 
-    public Player(final int index, final ArrayList<CardInput> deck, final CardInput hero, final int wins) {
+    public Player(final int index, final ArrayList<CardInput> deck, final Hero hero,
+                  final int wins, final ArrayList<Card> cardsInHand, final ArrayList<Card> frozenCards) {
         this.index = index;
         this.deck = deck;
         this.hero = hero;
-        this.cards_in_hand = new ArrayList<>();
+        this.cards_in_hand = cardsInHand;
         this.cardsUsedThisTour = new ArrayList<>();
-        this.frozenCards = new ArrayList<>();
+        this.frozenCards = frozenCards;
         this.stillFrozenCards = new ArrayList<>();
         this.heroUsed = 0;
-        this.playedGames = 0;
         this.wonGames = wins;
     }
 
@@ -48,7 +46,7 @@ public final class Player {
         return deck;
     }
 
-    public CardInput getHero() {
+    public Hero getHero() {
         return hero;
     }
 
@@ -58,14 +56,6 @@ public final class Player {
 
     public void setMana(final int mana) {
         this.mana = mana;
-    }
-
-    public int getTurn() {
-        return turn;
-    }
-
-    public void setTurn(final int turn) {
-        this.turn = turn;
     }
 
     public int getHeroUsed() {
@@ -82,14 +72,8 @@ public final class Player {
     public void setWonGames(final int wonGames) {
         this.wonGames = wonGames;
     }
-    public int getPlayedGames() {
-        return playedGames;
-    }
-    public void setPlayedGames(final int playedGames) {
-        this.playedGames = playedGames;
-    }
 
-    public ArrayList<CardInput> getCardsInHand() {
+    public ArrayList<Card> getCardsInHand() {
         return cards_in_hand;
     }
     /**
@@ -97,7 +81,7 @@ public final class Player {
      *
      * @param card este cartea nou adaugata
      */
-    public void addCardInHand(final CardInput card) {
+    public void addCardInHand(final Card card) {
         cards_in_hand.add(card);
     }
     /**
@@ -113,7 +97,7 @@ public final class Player {
      *
      * @param card este cartea eliminata
      */
-    public void removeCardInHand(final CardInput card) {
+    public void removeCardInHand(final Card card) {
         cards_in_hand.remove(card);
     }
 
@@ -122,7 +106,7 @@ public final class Player {
      *
      * @param card este cartea nou folosita
      */
-    public void addCardUsed(final CardInput card) {
+    public void addCardUsed(final Card card) {
         cardsUsedThisTour.add(card);
     }
     /**
@@ -130,11 +114,11 @@ public final class Player {
      *
      * @param card este cartea care a atacat
      */
-    public void removeCardUsed(final CardInput card) {
+    public void removeCardUsed(final Card card) {
         cardsUsedThisTour.remove(card);
     }
 
-    public ArrayList<CardInput> getCardsUsed() {
+    public ArrayList<Card> getCardsUsed() {
         return cardsUsedThisTour;
     }
     /**
@@ -142,7 +126,7 @@ public final class Player {
      *
      * @param card este cartea nou inghetata
      */
-    public void addCardFrozen(final CardInput card) {
+    public void addCardFrozen(final Card card) {
         frozenCards.add(card);
     }
     /**
@@ -150,15 +134,15 @@ public final class Player {
      *
      * @param card este cartea care este dezghetata
      */
-    public void removeCardFrozen(final CardInput card) {
+    public void removeCardFrozen(final Card card) {
         frozenCards.remove(card);
     }
 
-    public ArrayList<CardInput> getFrozenCards() {
+    public ArrayList<Card> getFrozenCards() {
         return frozenCards;
     }
 
-    public ArrayList<CardInput> getStillFrozenCards() {
+    public ArrayList<Card> getStillFrozenCards() {
         return stillFrozenCards;
     }
     /**
@@ -166,7 +150,7 @@ public final class Player {
      *
      * @param card este cartea
      */
-    public void addStillFrozenCard(final CardInput card) {
+    public void addStillFrozenCard(final Card card) {
         stillFrozenCards.add(card);
     }
     /**
@@ -174,7 +158,7 @@ public final class Player {
      *
      * @param card este cartea reinghetata
      */
-    public void removestillFrozenCard(final CardInput card) {
+    public void removestillFrozenCard(final Card card) {
         stillFrozenCards.remove(card);
     }
 
@@ -183,9 +167,9 @@ public final class Player {
      *
      * @param card este cartea cautata
      */
-    public int findCard(final CardInput card) {
+    public int findCard(final Card card) {
         if (!getFrozenCards().isEmpty()) {
-            for (CardInput cardFrozen : getFrozenCards()) {
+            for (Card cardFrozen : getFrozenCards()) {
                 if (cardFrozen == card) {
                     return 1;
                 }

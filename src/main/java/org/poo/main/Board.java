@@ -1,18 +1,14 @@
 package org.poo.main;
 
-
-import org.poo.fileio.CardInput;
-
-import java.awt.*;
 import java.util.ArrayList;
 
 public final class Board {
-    private final ArrayList<ArrayList<CardInput>> board;
+    private final ArrayList<ArrayList<Card>> board;
 
     public Board(final int rows, final int columns) {
         board = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
-            ArrayList<CardInput> row = new ArrayList<>();
+            ArrayList<Card> row = new ArrayList<>();
             for (int j = 0; j < columns; j++) {
                 row.add(null);
             }
@@ -20,13 +16,13 @@ public final class Board {
         }
     }
 
-    public int placeOnBoard(final CardInput card, final Player player) {
+    public int placeOnBoard(final Card card, final Player player) {
         if (player.getMana() >= card.getMana()) {
             String name = card.getName();
             if (name.equals("The Ripper") || name.equals("Miraj")
                     || name.equals("Goliath") || name.equals("Warden")) {
                 if (player.getPlayerIndex() == 2) {
-                    ArrayList<CardInput> row = board.get(1);
+                    ArrayList<Card> row = board.get(1);
                     for (int i = 0; i < row.size(); i++) {
                         if (row.get(i) == null) {
                             row.set(i, card);
@@ -36,7 +32,7 @@ public final class Board {
                     }
                     return 2;
                 } else if (player.getPlayerIndex() == 1) {
-                    ArrayList<CardInput> row = board.get(2);
+                    ArrayList<Card> row = board.get(2);
                     for (int i = 0; i < row.size(); i++) {
                         if (row.get(i) == null) {
                             row.set(i, card);
@@ -49,7 +45,7 @@ public final class Board {
             } else if (name.equals("The Cursed One") || name.equals("Disciple")
                     || name.equals("Sentinel") || name.equals("Berserker")) {
                 if (player.getPlayerIndex() == 2) {
-                    ArrayList<CardInput> row = board.get(0);
+                    ArrayList<Card> row = board.get(0);
                     for (int i = 0; i < row.size(); i++) {
                         if (row.get(i) == null) {
                             row.set(i, card);
@@ -59,7 +55,7 @@ public final class Board {
                     }
                     return 2;
                 } else if (player.getPlayerIndex() == 1) {
-                    ArrayList<CardInput> row = board.get(3);
+                    ArrayList<Card> row = board.get(3);
                     for (int i = 0; i < row.size(); i++) {
                         if (row.get(i) == null) { // Verificăm dacă poziția este goală
                             row.set(i, card); // Plasăm cartea în această poziție
@@ -74,7 +70,7 @@ public final class Board {
         return 0;
     }
 
-    public ArrayList<ArrayList<CardInput>> getBoard() {
+    public ArrayList<ArrayList<Card>> getBoard() {
         return board;
     }
 
@@ -90,12 +86,12 @@ public final class Board {
                 || xAttacked == Constants.ROW3.getValue()))) {
             return 1;
         }
-        for (CardInput card : playerAttacker.getCardsUsed()) {
+        for (Card card : playerAttacker.getCardsUsed()) {
             if (card == board.get(xAttacker).get(yAttacker)) {
                 return 2;
             }
         }
-        for (CardInput card : playerAttacker.getFrozenCards()) {
+        for (Card card : playerAttacker.getFrozenCards()) {
             if (card == board.get(xAttacker).get(yAttacker)) {
                 return 3;
             }
@@ -105,7 +101,7 @@ public final class Board {
         } else {
             row = 1;
         }
-        for (CardInput card : board.get(row)) {
+        for (Card card : board.get(row)) {
             if (card != null && board.get(xAttacked).get(yAttacked) != null) {
                 if ((card.getName().equals("Goliath") || card.getName().equals("Warden"))
                         && !(board.get(xAttacked).get(yAttacked).getName().equals("Goliath")
@@ -136,7 +132,7 @@ public final class Board {
                               final int yAttacked, final Player playerAttacker) {
         int row;
         if (playerAttacker.getFrozenCards().size() > 0) {
-            for (CardInput card : playerAttacker.getFrozenCards()) {
+            for (Card card : playerAttacker.getFrozenCards()) {
                 if (card != null) {
                     if (card == board.get(xAttacker).get(yAttacker)) {
                         return 1;
@@ -145,7 +141,7 @@ public final class Board {
             }
         }
         if (playerAttacker.getCardsUsed().size() > 0) {
-            for (CardInput card : playerAttacker.getCardsUsed()) {
+            for (Card card : playerAttacker.getCardsUsed()) {
                 if (card == board.get(xAttacker).get(yAttacker)) {
                     return 2;
                 }
@@ -178,7 +174,7 @@ public final class Board {
                 } else {
                     row = 1;
                 }
-                for (CardInput card : board.get(row)) {
+                for (Card card : board.get(row)) {
                     if (card != null && board.get(xAttacked).get(yAttacked) != null) {
                         if ((card.getName().equals("Goliath") || card.getName().equals("Warden"))
                                 && !(board.get(xAttacked).get(yAttacked).getName().equals("Goliath")
@@ -223,7 +219,7 @@ public final class Board {
     public int HeroAttack(final int xAttacker, final int yAttacker,
                           final Hero heroAttacked, final Player playerAttacker) {
         if (playerAttacker.getFrozenCards().size() > 0) {
-            for (CardInput card : playerAttacker.getFrozenCards()) {
+            for (Card card : playerAttacker.getFrozenCards()) {
                 if (card != null) {
                     if (card == board.get(xAttacker).get(yAttacker)) {
                         return 1;
@@ -232,7 +228,7 @@ public final class Board {
             }
         }
         if (playerAttacker.getCardsUsed().size() > 0) {
-            for (CardInput card : playerAttacker.getCardsUsed()) {
+            for (Card card : playerAttacker.getCardsUsed()) {
                 if (card != null) {
                     if (card == board.get(xAttacker).get(yAttacker)) {
                         return 2;
@@ -246,7 +242,7 @@ public final class Board {
         } else {
             row = 1;
         }
-        for (CardInput card : board.get(row)) {
+        for (Card card : board.get(row)) {
             if (card != null) {
                 if (card.getName().equals("Goliath") || card.getName().equals("Warden")) {
                     return 3;
@@ -291,10 +287,10 @@ public final class Board {
         int mana = player.getMana();
         player.setMana(mana - heroAttacker.getMana());
         if (heroAttacker.getName().equals("Lord Royce")) {
-            for (CardInput card : board.get(affectedRow)) {
+            for (Card card : board.get(affectedRow)) {
                 int ok = 1;
                 if (!playerAttacked.getFrozenCards().isEmpty()) {
-                    for (CardInput cardfrozen : playerAttacked.getFrozenCards()) {
+                    for (Card cardfrozen : playerAttacked.getFrozenCards()) {
                         if (card == cardfrozen) {
                             playerAttacked.addStillFrozenCard(card);
                             ok = 0;
@@ -310,13 +306,13 @@ public final class Board {
         }
         if (heroAttacker.getName().equals("Empress Thorina")) {
             int maxim = 0;
-            for (CardInput card : board.get(affectedRow)) {
+            for (Card card : board.get(affectedRow)) {
                 if (card != null && card.getHealth() > maxim) {
                     maxim = card.getHealth();
                 }
             }
             int collumn = 0;
-            for (CardInput card : board.get(affectedRow)) {
+            for (Card card : board.get(affectedRow)) {
                 if (card != null && card.getHealth() == maxim) {
                     card.setHealth(0);
                     int i = collumn;
@@ -333,7 +329,7 @@ public final class Board {
 
         }
         if (heroAttacker.getName().equals("King Mudface")) {
-            for (CardInput card : board.get(affectedRow)) {
+            for (Card card : board.get(affectedRow)) {
                 if (card != null) {
                     int health = card.getHealth();
                     card.setHealth(health + 1);
@@ -341,7 +337,7 @@ public final class Board {
             }
         }
         if (heroAttacker.getName().equals("General Kocioraw")) {
-            for (CardInput card : board.get(affectedRow)) {
+            for (Card card : board.get(affectedRow)) {
                 if (card != null) {
                     int attackDamage = card.getAttackDamage();
                     card.setAttackDamage(attackDamage + 1);

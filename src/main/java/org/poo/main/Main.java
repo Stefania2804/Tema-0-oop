@@ -74,24 +74,6 @@ public final class Main {
 
         ArrayNode output = objectMapper.createArrayNode();
 
-        /*
-         * TODO Implement your function here
-         *
-         * How to add output to the output array?
-         * There are multiple ways to do this, here is one example:
-         *
-         * ObjectMapper mapper = new ObjectMapper();
-         *
-         * ObjectNode objectNode = mapper.createObjectNode();
-         * objectNode.put("field_name", "field_value");
-         *
-         * ArrayNode arrayNode = mapper.createArrayNode();
-         * arrayNode.add(objectNode);
-         *
-         * output.add(arrayNode);
-         * output.add(objectNode);
-         *
-         */
         DecksInput decksInputPlayerOne = inputData.getPlayerOneDecks();
         DecksInput decksInputPlayerTwo = inputData.getPlayerTwoDecks();
         int nrCardsInDeckOne = decksInputPlayerOne.getNrCardsInDeck();
@@ -105,6 +87,10 @@ public final class Main {
         int gamesPlayed = 0;
         int playerOneWins = 0;
         int playerTwoWins = 0;
+        ArrayList<Card> cardsOneInHand = new ArrayList<>();
+        ArrayList<Card> cardsTwoInHand = new ArrayList<>();
+        ArrayList<Card> frozenOneCards = new ArrayList<>();
+        ArrayList<Card> frozenTwoCards = new ArrayList<>();
         for (int i = 0; i < games.size(); i++) {
             StartGameInput startGame = games.get(i).getStartGame();
             int playerOneDeckIdx = startGame.getPlayerOneDeckIdx();
@@ -116,8 +102,8 @@ public final class Main {
             CardInput playerTwoHero = startGame.getPlayerTwoHero();
             Hero heroOne = new Hero(playerOneHero);
             Hero heroTwo = new Hero(playerTwoHero);
-            Player playerOne = new Player(1, deckOne, playerOneHero, playerOneWins);
-            Player playerTwo = new Player(2, deckTwo, playerTwoHero, playerTwoWins);
+            Player playerOne = new Player(1, deckOne, heroOne, playerOneWins, cardsOneInHand, frozenOneCards);
+            Player playerTwo = new Player(2, deckTwo, heroTwo, playerTwoWins, cardsTwoInHand, frozenTwoCards);
             playerOne.setMana(1);
             playerTwo.setMana(1);
             int round = 1;
@@ -128,11 +114,15 @@ public final class Main {
             Random random2 = new Random(shuffleSeed);
             Collections.shuffle(deckTwo, random2);
             if (deckOne.size() > 0) {
-                playerOne.addCardInHand((deckOne.get(0)));
+                CardInput cardInput = deckOne.get(0);
+                Card card = new Card(cardInput);
+                playerOne.addCardInHand(card);
                 playerOne.removeCardDeck(deckOne.get(0));
             }
             if (deckTwo.size() > 0) {
-                playerTwo.addCardInHand((deckTwo.get(0)));
+                CardInput cardInput = deckTwo.get(0);
+                Card card = new Card(cardInput);
+                playerTwo.addCardInHand(card);
                 playerTwo.removeCardDeck(deckTwo.get(0));
             }
             ArrayList<ActionsInput> actions = games.get(i).getActions();
@@ -212,9 +202,10 @@ public final class Main {
                             playerOne.getFrozenCards().clear();
                         }
                         if (!playerOne.getStillFrozenCards().isEmpty()) {
-                            for (CardInput card : playerOne.getStillFrozenCards()) {
+                            for (Card card : playerOne.getStillFrozenCards()) {
                                 playerOne.addCardFrozen(card);
                             }
+                            frozenOneCards = playerOne.getFrozenCards();
                             playerOne.getStillFrozenCards().clear();
                         }
                     } else if (playerTurn == 2) {
@@ -225,9 +216,10 @@ public final class Main {
                             playerTwo.getFrozenCards().clear();
                         }
                         if (!playerTwo.getStillFrozenCards().isEmpty()) {
-                            for (CardInput card : playerTwo.getStillFrozenCards()) {
+                            for (Card card : playerTwo.getStillFrozenCards()) {
                                 playerTwo.addCardFrozen(card);
                             }
+                            frozenTwoCards = playerTwo.getFrozenCards();
                             playerTwo.getStillFrozenCards().clear();
                         }
                     }
@@ -245,12 +237,18 @@ public final class Main {
                         playerOne.setMana(manaOne);
                         playerTwo.setMana(manaTwo);
                         if (deckOne.size() > 0) {
-                            playerOne.addCardInHand(deckOne.get(0));
+                            CardInput cardInput = deckOne.get(0);
+                            Card card = new Card(cardInput);
+                            playerOne.addCardInHand(card);
                             playerOne.removeCardDeck(deckOne.get(0));
+                            cardsOneInHand = playerOne.getCardsInHand();
                         }
                         if (deckTwo.size() > 0) {
-                            playerTwo.addCardInHand(deckTwo.get(0));
+                            CardInput cardInput = deckTwo.get(0);
+                            Card card = new Card(cardInput);
+                            playerTwo.addCardInHand(card);
                             playerTwo.removeCardDeck(deckTwo.get(0));
+                            cardsTwoInHand = playerTwo.getCardsInHand();
                         }
                         turnOne = 0;
                         turnTwo = 0;
@@ -264,25 +262,25 @@ public final class Main {
                 }
                 if (command.equals("getCardsInHand")) {
                     if (playerIdx == 1) {
-                        ArrayList<CardInput> cards = playerOne.getCardsInHand();
+                        ArrayList<Card> cards = playerOne.getCardsInHand();
                         ObjectNode commandNode = objectMapper.createObjectNode();
                         commandNode.put("command", "getCardsInHand");
                         commandNode.put("playerIdx", playerIdx);
                         ArrayNode cardsArray = objectMapper.createArrayNode();
-                        for (CardInput cardInput : cards) {
-                            cardsArray.add(objectMapper.valueToTree(cardInput));
+                        for (Card card : cards) {
+                            cardsArray.add(objectMapper.valueToTree(card));
                         }
 
                         commandNode.set("output", cardsArray);
 
                         output.add(commandNode);
                     } else if (playerIdx == 2) {
-                        ArrayList<CardInput> cards = playerTwo.getCardsInHand();
+                        ArrayList<Card> cards = playerTwo.getCardsInHand();
                         ObjectNode commandNode = objectMapper.createObjectNode();
                         commandNode.put("command", "getCardsInHand");
                         commandNode.put("playerIdx", playerIdx);
                         ArrayNode cardsArray = objectMapper.createArrayNode();
-                        for (CardInput card : cards) {
+                        for (Card card : cards) {
                             cardsArray.add(objectMapper.valueToTree(card));
                         }
 
@@ -296,9 +294,9 @@ public final class Main {
                         continue;
                     }
                     if (playerTurn == 1) {
-                        ArrayList<CardInput> cards = playerOne.getCardsInHand();
+                        ArrayList<Card> cards = playerOne.getCardsInHand();
                         if (!cards.isEmpty() && handIdx >= 0 && handIdx < cards.size()) {
-                            CardInput card = cards.get(handIdx);
+                            Card card = cards.get(handIdx);
                             int result = board.placeOnBoard(card, playerOne);
                             if (result == 0) {
                                 ObjectNode commandNode = objectMapper.createObjectNode();
@@ -315,13 +313,14 @@ public final class Main {
                                 output.add(commandNode);
                             } else if (result == 1) {
                                 playerOne.removeCardInHand(card);
+                                cardsOneInHand = playerOne.getCardsInHand();
                             }
 
                         }
                     } else if (playerTurn == 2) {
-                        ArrayList<CardInput> cards = playerTwo.getCardsInHand();
+                        ArrayList<Card> cards = playerTwo.getCardsInHand();
                         if (!cards.isEmpty() && handIdx >= 0 && handIdx < cards.size()) {
-                            CardInput card = cards.get(handIdx);
+                            Card card = cards.get(handIdx);
                             int result = board.placeOnBoard(card, playerTwo);
                             if (result == 0) {
                                 ObjectNode commandNode = objectMapper.createObjectNode();
@@ -338,6 +337,7 @@ public final class Main {
                                 output.add(commandNode);
                             } else {
                                 playerTwo.removeCardInHand(card);
+                                cardsTwoInHand = playerTwo.getCardsInHand();
                             }
 
                         }
@@ -363,18 +363,18 @@ public final class Main {
                     }
                 }
                 if (command.equals("getCardsOnTable")) {
-                    ArrayList<ArrayList<CardInput>> cards = board.getBoard();
+                    ArrayList<ArrayList<Card>> cards = board.getBoard();
                     ObjectNode commandNode = objectMapper.createObjectNode();
                     commandNode.put("command", "getCardsOnTable");
 
                     ArrayNode rowsArray = objectMapper.createArrayNode();
 
-                    for (ArrayList<CardInput> row : cards) {
+                    for (ArrayList<Card> row : cards) {
                         ArrayNode rowArray = objectMapper.createArrayNode();
 
-                        for (CardInput cardInput : row) {
-                            if (cardInput != null) {
-                                rowArray.add(objectMapper.valueToTree(cardInput));
+                        for (Card card : row) {
+                            if (card != null) {
+                                rowArray.add(objectMapper.valueToTree(card));
                             }
                         }
 
@@ -388,7 +388,7 @@ public final class Main {
                     if (status == 1) {
                         continue;
                     }
-                    ArrayList<ArrayList<CardInput>> cards = board.getBoard();
+                    ArrayList<ArrayList<Card>> cards = board.getBoard();
                     int xAttacker = cardAttacker.getX();
                     int yAttacker = cardAttacker.getY();
                     int xAttacked = cardAttacked.getX();
@@ -457,7 +457,7 @@ public final class Main {
                     }
                 }
                 if (command.equals("getCardAtPosition")) {
-                    CardInput card = board.getBoard().get(xCard).get(yCard);
+                    Card card = board.getBoard().get(xCard).get(yCard);
                     if (card == null) {
                         ObjectNode commandNode = objectMapper.createObjectNode();
                         commandNode.put("command", "getCardAtPosition");
@@ -478,7 +478,7 @@ public final class Main {
                     if (status == 1) {
                         continue;
                     }
-                    ArrayList<ArrayList<CardInput>> cards = board.getBoard();
+                    ArrayList<ArrayList<Card>> cards = board.getBoard();
                     int xAttacker = cardAttacker.getX();
                     int yAttacker = cardAttacker.getY();
                     int xAttacked = cardAttacked.getX();
@@ -560,7 +560,7 @@ public final class Main {
                     if (status == 1) {
                         continue;
                     }
-                    ArrayList<ArrayList<CardInput>> cards = board.getBoard();
+                    ArrayList<ArrayList<Card>> cards = board.getBoard();
                     int xAttacker = cardAttacker.getX();
                     int yAttacker = cardAttacker.getY();
                     int resulted;
@@ -651,24 +651,24 @@ public final class Main {
                     }
                 }
                 if (command.equals("getFrozenCardsOnTable")) {
-                    ArrayList<ArrayList<CardInput>> cards = board.getBoard();
+                    ArrayList<ArrayList<Card>> cards = board.getBoard();
                     ObjectNode commandNode = objectMapper.createObjectNode();
                     commandNode.put("command", "getFrozenCardsOnTable");
 
                     ArrayNode outputArray = objectMapper.createArrayNode();
-                    for (ArrayList<CardInput> row : cards) {
-                        for (CardInput cardInput : row) {
-                            if (cardInput != null && (playerOne.findCard(cardInput) == 1
-                                    || playerTwo.findCard(cardInput) == 1)) {
+                    for (ArrayList<Card> row : cards) {
+                        for (Card card : row) {
+                            if (card != null && (playerOne.findCard(card) == 1
+                                    || playerTwo.findCard(card) == 1)) {
                                 ObjectNode cardNode = objectMapper.createObjectNode();
-                                cardNode.put("attackDamage", cardInput.getAttackDamage());
-                                cardNode.put("health", cardInput.getHealth());
-                                cardNode.put("mana", cardInput.getMana());
-                                cardNode.put("name", cardInput.getName());
-                                cardNode.put("description", cardInput.getDescription());
+                                cardNode.put("attackDamage", card.getAttackDamage());
+                                cardNode.put("health", card.getHealth());
+                                cardNode.put("mana", card.getMana());
+                                cardNode.put("name", card.getName());
+                                cardNode.put("description", card.getDescription());
 
                                 ArrayNode colorsArray = objectMapper.createArrayNode();
-                                for (String color : cardInput.getColors()) {
+                                for (String color : card.getColors()) {
                                     colorsArray.add(color);
                                 }
                                 cardNode.set("colors", colorsArray);
