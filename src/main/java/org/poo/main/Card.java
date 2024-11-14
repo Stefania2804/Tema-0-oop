@@ -16,7 +16,7 @@ public final class Card {
         this.attackDamage = cardInput.getAttackDamage();
         this.health = cardInput.getHealth();
         this.description = cardInput.getDescription();
-        this.colors = cardInput.getColors();
+        this.colors = new ArrayList<>(cardInput.getColors());
         this.name = cardInput.getName();
     }
 

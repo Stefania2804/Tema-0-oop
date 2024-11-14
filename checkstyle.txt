@@ -1,10 +1,18 @@
 Starting audit...
 [ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:10:22: Using the '.*' form of import should be avoided - org.poo.fileio.*. [AvoidStarImport]
-[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:69:5: Method length is 637 lines (max allowed is 150). [MethodLength]
-[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:105: Line is longer than 100 characters (found 110). [LineLength]
-[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:106: Line is longer than 100 characters (found 110). [LineLength]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:69:5: Method length is 528 lines (max allowed is 150). [MethodLength]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:598: Line is longer than 100 characters (found 137). [LineLength]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:598:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:612: Line is longer than 100 characters (found 137). [LineLength]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:612:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:620: Line is longer than 100 characters (found 117). [LineLength]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:620:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:627: Line is longer than 100 characters (found 137). [LineLength]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:627:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:641: Line is longer than 100 characters (found 157). [LineLength]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:641:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Player.java:11:29: Name 'cards_in_hand' must match pattern '^[a-z][a-zA-Z0-9]*$'. [MemberName]
-[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Player.java:21: Line is longer than 100 characters (found 105). [LineLength]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Player.java:20:36: Parameter deck should be final. [FinalParameters]
 [ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Player.java:33:42: 'index' hides a field. [HiddenField]
 [ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Board.java:19:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Board.java:58:53: '3' is a magic number. [MagicNumber]
@@ -29,4 +37,4 @@ Starting audit...
 [ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Board.java:284:24: '4' is a magic number. [MagicNumber]
 [ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Card.java:14:17: Parameter cardInput should be final. [FinalParameters]
 Audit done.
-Checkstyle ends with 29 errors.
+Checkstyle ends with 37 errors.

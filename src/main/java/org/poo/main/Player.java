@@ -8,26 +8,26 @@ import java.util.ArrayList;
 public final class Player {
     private int index;
     private ArrayList<CardInput> deck;
-    private ArrayList<Card> cards_in_hand;
+    private ArrayList<Card> cards_in_hand = new ArrayList<>();
     private Hero hero;
     private int mana;
-    private ArrayList<Card> cardsUsedThisTour;
-    private ArrayList<Card> frozenCards;
-    private ArrayList<Card> stillFrozenCards;
+    private ArrayList<Card> cardsUsedThisTour = new ArrayList<>();
+    private ArrayList<Card> frozenCards = new ArrayList<>();
+    private ArrayList<Card> stillFrozenCards = new ArrayList<>();
     private int heroUsed;
     private int wonGames;
 
-    public Player(final int index, final ArrayList<CardInput> deck, final Hero hero,
-                  final int wins, final ArrayList<Card> cardsInHand, final ArrayList<Card> frozenCards) {
+    public Player(final int index, ArrayList<CardInput> deck, final Hero hero,
+                  final int wins) {
         this.index = index;
         this.deck = deck;
         this.hero = hero;
-        this.cards_in_hand = cardsInHand;
-        this.cardsUsedThisTour = new ArrayList<>();
-        this.frozenCards = frozenCards;
-        this.stillFrozenCards = new ArrayList<>();
         this.heroUsed = 0;
         this.wonGames = wins;
+        this.cardsUsedThisTour = new ArrayList<>();
+        this.frozenCards = new ArrayList<>();
+        this.stillFrozenCards = new ArrayList<>();
+
     }
 
     public void setPlayerIndex(final int index) {
