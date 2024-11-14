@@ -3,9 +3,8 @@ package org.poo.main;
 import org.poo.fileio.CardInput;
 import java.util.ArrayList;
 
-public final class Card {
+public class Card {
     private int mana;
-    private int attackDamage;
     private int health;
     private String description;
     private ArrayList<String> colors;
@@ -13,7 +12,6 @@ public final class Card {
 
     public Card(CardInput cardInput) {
         this.mana = cardInput.getMana();
-        this.attackDamage = cardInput.getAttackDamage();
         this.health = cardInput.getHealth();
         this.description = cardInput.getDescription();
         this.colors = new ArrayList<>(cardInput.getColors());
@@ -26,14 +24,6 @@ public final class Card {
 
     public void setMana(final int mana) {
         this.mana = mana;
-    }
-
-    public int getAttackDamage() {
-        return attackDamage;
-    }
-
-    public void setAttackDamage(final int attackDamage) {
-        this.attackDamage = attackDamage;
     }
 
     public int getHealth() {
@@ -73,8 +63,6 @@ public final class Card {
         return "{"
                 +  "mana="
                 + mana
-                +  ", attackDamage="
-                + attackDamage
                 + ", health="
                 + health
                 +  ", description='"
@@ -87,5 +75,39 @@ public final class Card {
                 + name
                 + '\''
                 + '}';
+    }
+}
+
+class Minion extends Card {
+    private int attackDamage;
+
+    public Minion(CardInput cardInput) {
+        super(cardInput);
+        this.attackDamage = cardInput.getAttackDamage();
+    }
+
+    public int getAttackDamage() {
+        return attackDamage;
+    }
+
+    public void setAttackDamage(final int attackDamage) {
+        this.attackDamage = attackDamage;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", attackDamage=" + attackDamage;
+    }
+}
+
+class Hero  extends Card {
+    public Hero(final CardInput cardInput) {
+        super(cardInput);
+        super.setHealth(Constants.HEALTHHERO.getValue());
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

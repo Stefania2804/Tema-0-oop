@@ -67,20 +67,20 @@
   "playerIdx" : 1,
   "output" : {
     "mana" : 2,
+    "health" : 30,
     "description" : "Standard card: Exact precision is her mantra, emotion is for the weak.",
     "colors" : [ "White", "Black", "Grey" ],
-    "name" : "Empress Thorina",
-    "health" : 30
+    "name" : "Empress Thorina"
   }
 }, {
   "command" : "getPlayerHero",
   "playerIdx" : 2,
   "output" : {
     "mana" : 2,
+    "health" : 30,
     "description" : "Standard card: Every ancestor reached glory, now it is his time to rule.",
     "colors" : [ "Black", "Red", "Grey" ],
-    "name" : "Lord Royce",
-    "health" : 30
+    "name" : "Lord Royce"
   }
 }, {
   "command" : "getPlayerTurn",

@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public final class Player {
     private int index;
     private ArrayList<CardInput> deck;
-    private ArrayList<Card> cards_in_hand = new ArrayList<>();
+    private ArrayList<Minion> cards_in_hand = new ArrayList<>();
     private Hero hero;
     private int mana;
-    private ArrayList<Card> cardsUsedThisTour = new ArrayList<>();
-    private ArrayList<Card> frozenCards = new ArrayList<>();
-    private ArrayList<Card> stillFrozenCards = new ArrayList<>();
+    private ArrayList<Minion> cardsUsedThisTour = new ArrayList<>();
+    private ArrayList<Minion> frozenCards = new ArrayList<>();
+    private ArrayList<Minion> stillFrozenCards = new ArrayList<>();
     private int heroUsed;
     private int wonGames;
 
@@ -73,7 +73,7 @@ public final class Player {
         this.wonGames = wonGames;
     }
 
-    public ArrayList<Card> getCardsInHand() {
+    public ArrayList<Minion> getCardsInHand() {
         return cards_in_hand;
     }
     /**
@@ -81,7 +81,7 @@ public final class Player {
      *
      * @param card este cartea nou adaugata
      */
-    public void addCardInHand(final Card card) {
+    public void addCardInHand(final Minion card) {
         cards_in_hand.add(card);
     }
     /**
@@ -97,7 +97,7 @@ public final class Player {
      *
      * @param card este cartea eliminata
      */
-    public void removeCardInHand(final Card card) {
+    public void removeCardInHand(final Minion card) {
         cards_in_hand.remove(card);
     }
 
@@ -106,7 +106,7 @@ public final class Player {
      *
      * @param card este cartea nou folosita
      */
-    public void addCardUsed(final Card card) {
+    public void addCardUsed(final Minion card) {
         cardsUsedThisTour.add(card);
     }
     /**
@@ -114,11 +114,11 @@ public final class Player {
      *
      * @param card este cartea care a atacat
      */
-    public void removeCardUsed(final Card card) {
+    public void removeCardUsed(final Minion card) {
         cardsUsedThisTour.remove(card);
     }
 
-    public ArrayList<Card> getCardsUsed() {
+    public ArrayList<Minion> getCardsUsed() {
         return cardsUsedThisTour;
     }
     /**
@@ -126,7 +126,7 @@ public final class Player {
      *
      * @param card este cartea nou inghetata
      */
-    public void addCardFrozen(final Card card) {
+    public void addCardFrozen(final Minion card) {
         frozenCards.add(card);
     }
     /**
@@ -134,15 +134,15 @@ public final class Player {
      *
      * @param card este cartea care este dezghetata
      */
-    public void removeCardFrozen(final Card card) {
+    public void removeCardFrozen(final Minion card) {
         frozenCards.remove(card);
     }
 
-    public ArrayList<Card> getFrozenCards() {
+    public ArrayList<Minion> getFrozenCards() {
         return frozenCards;
     }
 
-    public ArrayList<Card> getStillFrozenCards() {
+    public ArrayList<Minion> getStillFrozenCards() {
         return stillFrozenCards;
     }
     /**
@@ -150,7 +150,7 @@ public final class Player {
      *
      * @param card este cartea
      */
-    public void addStillFrozenCard(final Card card) {
+    public void addStillFrozenCard(final Minion card) {
         stillFrozenCards.add(card);
     }
     /**
@@ -158,7 +158,7 @@ public final class Player {
      *
      * @param card este cartea reinghetata
      */
-    public void removestillFrozenCard(final Card card) {
+    public void removestillFrozenCard(final Minion card) {
         stillFrozenCards.remove(card);
     }
 
@@ -167,9 +167,9 @@ public final class Player {
      *
      * @param card este cartea cautata
      */
-    public int findCard(final Card card) {
+    public int findCard(final Minion card) {
         if (!getFrozenCards().isEmpty()) {
-            for (Card cardFrozen : getFrozenCards()) {
+            for (Minion cardFrozen : getFrozenCards()) {
                 if (cardFrozen == card) {
                     return 1;
                 }

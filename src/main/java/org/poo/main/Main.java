@@ -111,13 +111,13 @@ public final class Main {
             Collections.shuffle(deckTwo, random2);
             if (deckOne.size() > 0) {
                 CardInput cardInput = deckOne.get(0);
-                Card card = new Card(cardInput);
+                Minion card = new Minion(cardInput);
                 playerOne.addCardInHand(card);
                 playerOne.removeCardDeck(deckOne.get(0));
             }
             if (deckTwo.size() > 0) {
                 CardInput cardInput = deckTwo.get(0);
-                Card card = new Card(cardInput);
+                Minion card = new Minion(cardInput);
                 playerTwo.addCardInHand(card);
                 playerTwo.removeCardDeck(deckTwo.get(0));
             }
@@ -134,22 +134,47 @@ public final class Main {
                 int xCard = actions.get(j).getX();
                 int yCard = actions.get(j).getY();
                 int affectedRow = actions.get(j).getAffectedRow();
-                if (playerIdx == 1) {
-                    if (command.equals("getPlayerDeck")) {
-                        getPlayerDeck(playerOne, playerIdx, objectMapper, output);
-                    } else if (command.equals("getPlayerHero")) {
-                        getPlayerHero(playerOne, playerIdx, objectMapper, output);
-                    }
-                } else if (playerIdx == 2) {
-                    if (command.equals("getPlayerDeck")) {
-                        getPlayerDeck(playerTwo, playerIdx, objectMapper, output);
-                    } else if (command.equals("getPlayerHero")) {
-                        getPlayerHero(playerTwo, playerIdx, objectMapper, output);
-                    }
-
+                switch(playerIdx) {
+                    case 1:
+                        switch (command) {
+                            case "getPlayerDeck":
+                                getPlayerDeck(playerOne, playerIdx, objectMapper, output);
+                                break;
+                            case "getPlayerHero":
+                                getPlayerHero(playerOne, playerIdx, objectMapper, output);
+                                break;
+                            case "getCardsInHand":
+                                getCardsInHand(playerOne, playerIdx, objectMapper, output);
+                                break;
+                            case "getPlayerMana":
+                                getPlayerMana(playerOne, playerIdx, objectMapper, output);
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch (command) {
+                            case "getPlayerDeck":
+                                getPlayerDeck(playerTwo, playerIdx, objectMapper, output);
+                                break;
+                            case "getPlayerHero":
+                                getPlayerHero(playerTwo, playerIdx, objectMapper, output);
+                                break;
+                            case "getCardsInHand":
+                                getCardsInHand(playerTwo, playerIdx, objectMapper, output);
+                                break;
+                            case "getPlayerMana":
+                                getPlayerMana(playerTwo, playerIdx, objectMapper, output);
+                                break;
+                        }
+                        break;
                 }
-                if (command.equals("getPlayerTurn")) {
-                    getPlayerTurn(playerTurn, objectMapper, output);
+                switch (command) {
+                    case "getPlayerTurn":
+                        getPlayerTurn(playerTurn, objectMapper, output);
+                        break;
+                    case "getCardsOnTable":
+                        getCardsOnTable(board, objectMapper, output);
+                        break;
                 }
                 if (command.equals("endPlayerTurn")) {
                     if (status == 1) {
@@ -163,7 +188,7 @@ public final class Main {
                             playerOne.getFrozenCards().clear();
                         }
                         if (!playerOne.getStillFrozenCards().isEmpty()) {
-                            for (Card card : playerOne.getStillFrozenCards()) {
+                            for (Minion card : playerOne.getStillFrozenCards()) {
                                 playerOne.addCardFrozen(card);
                             }
                             playerOne.getStillFrozenCards().clear();
@@ -176,7 +201,7 @@ public final class Main {
                             playerTwo.getFrozenCards().clear();
                         }
                         if (!playerTwo.getStillFrozenCards().isEmpty()) {
-                            for (Card card : playerTwo.getStillFrozenCards()) {
+                            for (Minion card : playerTwo.getStillFrozenCards()) {
                                 playerTwo.addCardFrozen(card);
                             }
                             playerTwo.getStillFrozenCards().clear();
@@ -197,13 +222,13 @@ public final class Main {
                         playerTwo.setMana(manaTwo);
                         if (deckOne.size() > 0) {
                             CardInput cardInput = deckOne.get(0);
-                            Card card = new Card(cardInput);
+                            Minion card = new Minion(cardInput);
                             playerOne.addCardInHand(card);
                             playerOne.removeCardDeck(deckOne.get(0));
                         }
                         if (deckTwo.size() > 0) {
                             CardInput cardInput = deckTwo.get(0);
-                            Card card = new Card(cardInput);
+                            Minion card = new Minion(cardInput);
                             playerTwo.addCardInHand(card);
                             playerTwo.removeCardDeck(deckTwo.get(0));
                         }
@@ -217,13 +242,6 @@ public final class Main {
                         }
                     }
                 }
-                if (command.equals("getCardsInHand")) {
-                    if (playerIdx == 1) {
-                        getCardInHand(playerOne, playerIdx, objectMapper, output);
-                    } else if (playerIdx == 2) {
-                        getCardInHand(playerTwo, playerIdx, objectMapper, output);
-                    }
-                }
                 if (command.equals("placeCard")) {
                     if (status == 1) {
                         continue;
@@ -234,52 +252,11 @@ public final class Main {
                         placeCardOnTable(playerTwo, handIdx, board, objectMapper, output);
                     }
                 }
-                if (command.equals("getPlayerMana")) {
-                    if (playerIdx == 1) {
-                        int mana = playerOne.getMana();
-                        ObjectNode commandNode = objectMapper.createObjectNode();
-                        commandNode.put("command", "getPlayerMana");
-                        commandNode.put("playerIdx", playerIdx);
-                        commandNode.set("output", objectMapper.valueToTree(mana));
-
-                        output.add(commandNode);
-                    } else if (playerIdx == 2) {
-                        int mana = playerTwo.getMana();
-                        ObjectNode commandNode = objectMapper.createObjectNode();
-                        commandNode.put("command", "getPlayerMana");
-                        commandNode.put("playerIdx", playerIdx);
-                        commandNode.set("output", objectMapper.valueToTree(mana));
-
-                        output.add(commandNode);
-                    }
-                }
-                if (command.equals("getCardsOnTable")) {
-                    ArrayList<ArrayList<Card>> cards = board.getBoard();
-                    ObjectNode commandNode = objectMapper.createObjectNode();
-                    commandNode.put("command", "getCardsOnTable");
-
-                    ArrayNode rowsArray = objectMapper.createArrayNode();
-
-                    for (ArrayList<Card> row : cards) {
-                        ArrayNode rowArray = objectMapper.createArrayNode();
-
-                        for (Card card : row) {
-                            if (card != null) {
-                                rowArray.add(objectMapper.valueToTree(card));
-                            }
-                        }
-
-                        rowsArray.add(rowArray);
-                    }
-
-                    commandNode.set("output", rowsArray);
-                    output.add(commandNode);
-                }
                 if (command.equals("cardUsesAttack")) {
                     if (status == 1) {
                         continue;
                     }
-                    ArrayList<ArrayList<Card>> cards = board.getBoard();
+                    ArrayList<ArrayList<Minion>> cards = board.getBoard();
                     int xAttacker = cardAttacker.getX();
                     int yAttacker = cardAttacker.getY();
                     int xAttacked = cardAttacked.getX();
@@ -348,7 +325,7 @@ public final class Main {
                     }
                 }
                 if (command.equals("getCardAtPosition")) {
-                    Card card = board.getBoard().get(xCard).get(yCard);
+                    Minion card = board.getBoard().get(xCard).get(yCard);
                     if (card == null) {
                         ObjectNode commandNode = objectMapper.createObjectNode();
                         commandNode.put("command", "getCardAtPosition");
@@ -369,7 +346,7 @@ public final class Main {
                     if (status == 1) {
                         continue;
                     }
-                    ArrayList<ArrayList<Card>> cards = board.getBoard();
+                    ArrayList<ArrayList<Minion>> cards = board.getBoard();
                     int xAttacker = cardAttacker.getX();
                     int yAttacker = cardAttacker.getY();
                     int xAttacked = cardAttacked.getX();
@@ -451,7 +428,7 @@ public final class Main {
                     if (status == 1) {
                         continue;
                     }
-                    ArrayList<ArrayList<Card>> cards = board.getBoard();
+                    ArrayList<ArrayList<Minion>> cards = board.getBoard();
                     int xAttacker = cardAttacker.getX();
                     int yAttacker = cardAttacker.getY();
                     int resulted;
@@ -542,13 +519,13 @@ public final class Main {
                     }
                 }
                 if (command.equals("getFrozenCardsOnTable")) {
-                    ArrayList<ArrayList<Card>> cards = board.getBoard();
+                    ArrayList<ArrayList<Minion>> cards = board.getBoard();
                     ObjectNode commandNode = objectMapper.createObjectNode();
                     commandNode.put("command", "getFrozenCardsOnTable");
 
                     ArrayNode outputArray = objectMapper.createArrayNode();
-                    for (ArrayList<Card> row : cards) {
-                        for (Card card : row) {
+                    for (ArrayList<Minion> row : cards) {
+                        for (Minion card : row) {
                             if (card != null && (playerOne.findCard(card) == 1
                                     || playerTwo.findCard(card) == 1)) {
                                 ObjectNode cardNode = objectMapper.createObjectNode();
@@ -624,13 +601,13 @@ public final class Main {
 
         output.add(commandNode);
     }
-    public static void getCardInHand(final Player player, final int playerIdx, final ObjectMapper objectMapper, final ArrayNode output) {
-        ArrayList<Card> cards = player.getCardsInHand();
+    public static void getCardsInHand(final Player player, final int playerIdx, final ObjectMapper objectMapper, final ArrayNode output) {
+        ArrayList<Minion> cards = player.getCardsInHand();
         ObjectNode commandNode = objectMapper.createObjectNode();
         commandNode.put("command", "getCardsInHand");
         commandNode.put("playerIdx", playerIdx);
         ArrayNode cardsArray = objectMapper.createArrayNode();
-        for (Card card : cards) {
+        for (Minion card : cards) {
             cardsArray.add(objectMapper.valueToTree(card));
         }
 
@@ -638,10 +615,11 @@ public final class Main {
 
         output.add(commandNode);
     }
-    public static void placeCardOnTable(final Player player, final int handIdx, final Board board, final ObjectMapper objectMapper, final ArrayNode output) {
-        ArrayList<Card> cards = player.getCardsInHand();
+    public static void placeCardOnTable(final Player player, final int handIdx,
+                                        final Board board, final ObjectMapper objectMapper, final ArrayNode output) {
+        ArrayList<Minion> cards = player.getCardsInHand();
         if (!cards.isEmpty() && handIdx >= 0 && handIdx < cards.size()) {
-            Card card = cards.get(handIdx);
+            Minion card = cards.get(handIdx);
             int result = board.placeOnBoard(card, player);
             if (result == 0) {
                 ObjectNode commandNode = objectMapper.createObjectNode();
@@ -661,5 +639,38 @@ public final class Main {
             }
 
         }
+    }
+    public static void getPlayerMana(final Player player, final int playerIdx,
+                                     final ObjectMapper objectMapper, final ArrayNode output) {
+        int mana = player.getMana();
+        ObjectNode commandNode = objectMapper.createObjectNode();
+        commandNode.put("command", "getPlayerMana");
+        commandNode.put("playerIdx", playerIdx);
+        commandNode.set("output", objectMapper.valueToTree(mana));
+
+        output.add(commandNode);
+    }
+    public static void getCardsOnTable(final Board board, final ObjectMapper objectMapper,
+                                       final ArrayNode output) {
+        ArrayList<ArrayList<Minion>> cards = board.getBoard();
+        ObjectNode commandNode = objectMapper.createObjectNode();
+        commandNode.put("command", "getCardsOnTable");
+
+        ArrayNode rowsArray = objectMapper.createArrayNode();
+
+        for (ArrayList<Minion> row : cards) {
+            ArrayNode rowArray = objectMapper.createArrayNode();
+
+            for (Minion card : row) {
+                if (card != null) {
+                    rowArray.add(objectMapper.valueToTree(card));
+                }
+            }
+
+            rowsArray.add(rowArray);
+        }
+
+        commandNode.set("output", rowsArray);
+        output.add(commandNode);
     }
 }

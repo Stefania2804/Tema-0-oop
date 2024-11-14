@@ -3,26 +3,29 @@ package org.poo.main;
 import java.util.ArrayList;
 
 public final class Board {
-    private final ArrayList<ArrayList<Card>> board;
+    private final ArrayList<ArrayList<Minion>> board;
 
     public Board(final int rows, final int columns) {
         board = new ArrayList<>();
         for (int k = 0; k < rows; k++) {
-            ArrayList<Card> row = new ArrayList<>();
+            ArrayList<Minion> row = new ArrayList<>();
             for (int p = 0; p < columns; p++) {
                 row.add(null);
             }
             board.add(row);
         }
     }
+    public ArrayList<ArrayList<Minion>> getBoard() {
+        return board;
+    }
 
-    public int placeOnBoard(final Card card, final Player player) {
+    public int placeOnBoard(final Minion card, final Player player) {
         if (player.getMana() >= card.getMana()) {
             String name = card.getName();
             if (name.equals("The Ripper") || name.equals("Miraj")
                     || name.equals("Goliath") || name.equals("Warden")) {
                 if (player.getPlayerIndex() == 2) {
-                    ArrayList<Card> row = board.get(1);
+                    ArrayList<Minion> row = board.get(1);
                     for (int k = 0; k < row.size(); k++) {
                         if (row.get(k) == null) {
                             row.set(k, card);
@@ -32,7 +35,7 @@ public final class Board {
                     }
                     return 2;
                 } else if (player.getPlayerIndex() == 1) {
-                    ArrayList<Card> row = board.get(2);
+                    ArrayList<Minion> row = board.get(2);
                     for (int k = 0; k < row.size(); k++) {
                         if (row.get(k) == null) {
                             row.set(k, card);
@@ -45,7 +48,7 @@ public final class Board {
             } else if (name.equals("The Cursed One") || name.equals("Disciple")
                     || name.equals("Sentinel") || name.equals("Berserker")) {
                 if (player.getPlayerIndex() == 2) {
-                    ArrayList<Card> row = board.get(0);
+                    ArrayList<Minion> row = board.get(0);
                     for (int k = 0; k < row.size(); k++) {
                         if (row.get(k) == null) {
                             row.set(k, card);
@@ -55,10 +58,10 @@ public final class Board {
                     }
                     return 2;
                 } else if (player.getPlayerIndex() == 1) {
-                    ArrayList<Card> row = board.get(3);
+                    ArrayList<Minion> row = board.get(3);
                     for (int k = 0; k < row.size(); k++) {
-                        if (row.get(k) == null) { // Verificăm dacă poziția este goală
-                            row.set(k, card); // Plasăm cartea în această poziție
+                        if (row.get(k) == null) {
+                            row.set(k, card);
                             player.setMana(player.getMana() - card.getMana());
                             return 1;
                         }
@@ -68,10 +71,6 @@ public final class Board {
             }
         }
         return 0;
-    }
-
-    public ArrayList<ArrayList<Card>> getBoard() {
-        return board;
     }
 
     public int cardAttack(final int xAttacker, final int yAttacker, final int xAttacked,
@@ -86,12 +85,12 @@ public final class Board {
                 || xAttacked == Constants.ROW3.getValue()))) {
             return 1;
         }
-        for (Card card : playerAttacker.getCardsUsed()) {
+        for (Minion card : playerAttacker.getCardsUsed()) {
             if (card == board.get(xAttacker).get(yAttacker)) {
                 return 2;
             }
         }
-        for (Card card : playerAttacker.getFrozenCards()) {
+        for (Minion card : playerAttacker.getFrozenCards()) {
             if (card == board.get(xAttacker).get(yAttacker)) {
                 return 3;
             }
@@ -101,7 +100,7 @@ public final class Board {
         } else {
             row = 1;
         }
-        for (Card card : board.get(row)) {
+        for (Minion card : board.get(row)) {
             if (card != null && board.get(xAttacked).get(yAttacked) != null) {
                 if ((card.getName().equals("Goliath") || card.getName().equals("Warden"))
                         && !(board.get(xAttacked).get(yAttacked).getName().equals("Goliath")
@@ -132,7 +131,7 @@ public final class Board {
                               final int yAttacked, final Player playerAttacker) {
         int row;
         if (playerAttacker.getFrozenCards().size() > 0) {
-            for (Card card : playerAttacker.getFrozenCards()) {
+            for (Minion card : playerAttacker.getFrozenCards()) {
                 if (card != null) {
                     if (card == board.get(xAttacker).get(yAttacker)) {
                         return 1;
@@ -141,7 +140,7 @@ public final class Board {
             }
         }
         if (playerAttacker.getCardsUsed().size() > 0) {
-            for (Card card : playerAttacker.getCardsUsed()) {
+            for (Minion card : playerAttacker.getCardsUsed()) {
                 if (card == board.get(xAttacker).get(yAttacker)) {
                     return 2;
                 }
@@ -174,7 +173,7 @@ public final class Board {
                 } else {
                     row = 1;
                 }
-                for (Card card : board.get(row)) {
+                for (Minion card : board.get(row)) {
                     if (card != null && board.get(xAttacked).get(yAttacked) != null) {
                         if ((card.getName().equals("Goliath") || card.getName().equals("Warden"))
                                 && !(board.get(xAttacked).get(yAttacked).getName().equals("Goliath")
@@ -219,7 +218,7 @@ public final class Board {
     public int HeroAttack(final int xAttacker, final int yAttacker,
                           final Hero heroAttacked, final Player playerAttacker) {
         if (playerAttacker.getFrozenCards().size() > 0) {
-            for (Card card : playerAttacker.getFrozenCards()) {
+            for (Minion card : playerAttacker.getFrozenCards()) {
                 if (card != null) {
                     if (card == board.get(xAttacker).get(yAttacker)) {
                         return 1;
@@ -228,7 +227,7 @@ public final class Board {
             }
         }
         if (playerAttacker.getCardsUsed().size() > 0) {
-            for (Card card : playerAttacker.getCardsUsed()) {
+            for (Minion card : playerAttacker.getCardsUsed()) {
                 if (card != null) {
                     if (card == board.get(xAttacker).get(yAttacker)) {
                         return 2;
@@ -242,7 +241,7 @@ public final class Board {
         } else {
             row = 1;
         }
-        for (Card card : board.get(row)) {
+        for (Minion card : board.get(row)) {
             if (card != null) {
                 if (card.getName().equals("Goliath") || card.getName().equals("Warden")) {
                     return 3;
@@ -287,10 +286,10 @@ public final class Board {
         int mana = player.getMana();
         player.setMana(mana - heroAttacker.getMana());
         if (heroAttacker.getName().equals("Lord Royce")) {
-            for (Card card : board.get(affectedRow)) {
+            for (Minion card : board.get(affectedRow)) {
                 int ok = 1;
                 if (!playerAttacked.getFrozenCards().isEmpty()) {
-                    for (Card cardfrozen : playerAttacked.getFrozenCards()) {
+                    for (Minion cardfrozen : playerAttacked.getFrozenCards()) {
                         if (card == cardfrozen) {
                             playerAttacked.addStillFrozenCard(card);
                             ok = 0;
@@ -306,13 +305,13 @@ public final class Board {
         }
         if (heroAttacker.getName().equals("Empress Thorina")) {
             int maxim = 0;
-            for (Card card : board.get(affectedRow)) {
+            for (Minion card : board.get(affectedRow)) {
                 if (card != null && card.getHealth() > maxim) {
                     maxim = card.getHealth();
                 }
             }
             int collumn = 0;
-            for (Card card : board.get(affectedRow)) {
+            for (Minion card : board.get(affectedRow)) {
                 if (card != null && card.getHealth() == maxim) {
                     card.setHealth(0);
                     int pos = collumn;
@@ -329,7 +328,7 @@ public final class Board {
 
         }
         if (heroAttacker.getName().equals("King Mudface")) {
-            for (Card card : board.get(affectedRow)) {
+            for (Minion card : board.get(affectedRow)) {
                 if (card != null) {
                     int health = card.getHealth();
                     card.setHealth(health + 1);
@@ -337,7 +336,7 @@ public final class Board {
             }
         }
         if (heroAttacker.getName().equals("General Kocioraw")) {
-            for (Card card : board.get(affectedRow)) {
+            for (Minion card : board.get(affectedRow)) {
                 if (card != null) {
                     int attackDamage = card.getAttackDamage();
                     card.setAttackDamage(attackDamage + 1);
