@@ -8,42 +8,42 @@ import java.util.ArrayList;
 public final class Player {
     private int index;
     private ArrayList<CardInput> deck;
-    private ArrayList<Minion> cards_in_hand = new ArrayList<>();
+    private ArrayList<Minion> cardsInHand;
     private Hero hero;
     private int mana;
-    private ArrayList<Minion> cardsUsedThisTour = new ArrayList<>();
-    private ArrayList<Minion> frozenCards = new ArrayList<>();
-    private ArrayList<Minion> stillFrozenCards = new ArrayList<>();
+    private ArrayList<Minion> cardsUsedThisTour;
+    private ArrayList<Minion> frozenCards;
+    private ArrayList<Minion> stillFrozenCards;
     private int heroUsed;
-    private int wonGames;
+    private int playerWins;
 
-    public Player(final int index, ArrayList<CardInput> deck, final Hero hero,
-                  final int wins) {
+    public Player(final int index, final ArrayList<CardInput> deck, final Hero hero,
+                  final int playerWins) {
         this.index = index;
         this.deck = deck;
         this.hero = hero;
         this.heroUsed = 0;
-        this.wonGames = wins;
+        this.playerWins = playerWins;
+        this.cardsInHand = new ArrayList<>();
         this.cardsUsedThisTour = new ArrayList<>();
         this.frozenCards = new ArrayList<>();
         this.stillFrozenCards = new ArrayList<>();
 
+    }
+    public int getPlayerIndex() {
+        return index;
     }
 
     public void setPlayerIndex(final int index) {
         this.index = index;
     }
 
-    public int getPlayerIndex() {
-        return index;
+    public ArrayList<CardInput> getPlayerDeck() {
+        return deck;
     }
 
     public void setDeck(final ArrayList<CardInput> deck) {
         this.deck = deck;
-    }
-
-    public ArrayList<CardInput> getPlayerDeck() {
-        return deck;
     }
 
     public Hero getHero() {
@@ -66,15 +66,16 @@ public final class Player {
         this.heroUsed = heroUsed;
     }
 
-    public int getWonGames() {
-        return wonGames;
+    public int getPlayerWins() {
+        return playerWins;
     }
-    public void setWonGames(final int wonGames) {
-        this.wonGames = wonGames;
+
+    public void setPlayerWins(final int playerWins) {
+        this.playerWins = playerWins;
     }
 
     public ArrayList<Minion> getCardsInHand() {
-        return cards_in_hand;
+        return cardsInHand;
     }
     /**
      * Adauga o carte in mana jucatorului.
@@ -82,7 +83,7 @@ public final class Player {
      * @param card este cartea nou adaugata
      */
     public void addCardInHand(final Minion card) {
-        cards_in_hand.add(card);
+        cardsInHand.add(card);
     }
     /**
      * Elimina o carte din pachet.
@@ -98,7 +99,7 @@ public final class Player {
      * @param card este cartea eliminata
      */
     public void removeCardInHand(final Minion card) {
-        cards_in_hand.remove(card);
+        cardsInHand.remove(card);
     }
 
     /**

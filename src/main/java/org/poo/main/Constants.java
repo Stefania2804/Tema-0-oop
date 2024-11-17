@@ -13,8 +13,9 @@ public enum Constants {
     ROW2(2),
     ROW3(3),
     MAXIMMANA(10),
-    HEALTHHERO(30);
-
+    HEALTHHERO(30),
+    INDEXONE(1),
+    INDEXTWO(2);
 
     private final int value;  // Câmp pentru valoarea constantelor
 

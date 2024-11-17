@@ -18,32 +18,37 @@ public final class Board {
     public ArrayList<ArrayList<Minion>> getBoard() {
         return board;
     }
-
+    /**
+     * Jucatorul curent pune o carte pe masa.
+     *
+     * @param card este cartea nou adaugata,
+     * @param player este player-ul care pune cartea pe masa
+     */
     public int placeOnBoard(final Minion card, final Player player) {
         if (player.getMana() >= card.getMana()) {
             String name = card.getName();
             if (name.equals("The Ripper") || name.equals("Miraj")
                     || name.equals("Goliath") || name.equals("Warden")) {
-                if (player.getPlayerIndex() == 2) {
+                if (player.getPlayerIndex() == Constants.INDEXTWO.getValue()) {
                     ArrayList<Minion> row = board.get(1);
                     for (int k = 0; k < row.size(); k++) {
                         if (row.get(k) == null) {
                             row.set(k, card);
                             player.setMana(player.getMana() - card.getMana());
-                            return 1;
+                            return 0;
                         }
                     }
-                    return 2;
-                } else if (player.getPlayerIndex() == 1) {
+                    return Constants.ERROR2.getValue();
+                } else if (player.getPlayerIndex() == Constants.INDEXONE.getValue()) {
                     ArrayList<Minion> row = board.get(2);
                     for (int k = 0; k < row.size(); k++) {
                         if (row.get(k) == null) {
                             row.set(k, card);
                             player.setMana(player.getMana() - card.getMana());
-                            return 1;
+                            return 0;
                         }
                     }
-                    return 2;
+                    return Constants.ERROR2.getValue();
                 }
             } else if (name.equals("The Cursed One") || name.equals("Disciple")
                     || name.equals("Sentinel") || name.equals("Berserker")) {
@@ -53,26 +58,30 @@ public final class Board {
                         if (row.get(k) == null) {
                             row.set(k, card);
                             player.setMana(player.getMana() - card.getMana());
-                            return 1;
+                            return 0;
                         }
                     }
-                    return 2;
+                    return Constants.ERROR2.getValue();
                 } else if (player.getPlayerIndex() == 1) {
-                    ArrayList<Minion> row = board.get(3);
+                    ArrayList<Minion> row = board.get(Constants.ROW3.getValue());
                     for (int k = 0; k < row.size(); k++) {
                         if (row.get(k) == null) {
                             row.set(k, card);
                             player.setMana(player.getMana() - card.getMana());
-                            return 1;
+                            return 0;
                         }
                     }
-                    return 2;
+                    return Constants.ERROR2.getValue();
                 }
             }
         }
-        return 0;
+        return Constants.ERROR1.getValue();
     }
-
+    /**
+     * Jucatorul foloseste o carte de pe masa sa atace.
+     *
+     * @param playerAttacker este player-ul care ataca
+     */
     public int cardAttack(final int xAttacker, final int yAttacker, final int xAttacked,
                           final int yAttacked, final Player playerAttacker) {
         int row;
@@ -83,29 +92,29 @@ public final class Board {
                 || xAttacker == Constants.ROW3.getValue())
                 && (xAttacked == Constants.ROW2.getValue()
                 || xAttacked == Constants.ROW3.getValue()))) {
-            return 1;
+            return Constants.ERROR1.getValue();
         }
         for (Minion card : playerAttacker.getCardsUsed()) {
             if (card == board.get(xAttacker).get(yAttacker)) {
-                return 2;
+                return Constants.ERROR2.getValue();
             }
         }
         for (Minion card : playerAttacker.getFrozenCards()) {
             if (card == board.get(xAttacker).get(yAttacker)) {
-                return 3;
+                return Constants.ERROR3.getValue();
             }
         }
         if (xAttacker == Constants.ROW0.getValue() || xAttacker == Constants.ROW1.getValue()) {
-            row = 2;
+            row = Constants.ROW2.getValue();
         } else {
-            row = 1;
+            row = Constants.ROW1.getValue();
         }
         for (Minion card : board.get(row)) {
             if (card != null && board.get(xAttacked).get(yAttacked) != null) {
                 if ((card.getName().equals("Goliath") || card.getName().equals("Warden"))
                         && !(board.get(xAttacked).get(yAttacked).getName().equals("Goliath")
                         || board.get(xAttacked).get(yAttacked).getName().equals("Warden"))) {
-                    return 4;
+                    return Constants.ERROR4.getValue();
                 }
             }
         }
@@ -126,7 +135,11 @@ public final class Board {
         }
         return 0;
     }
-
+    /**
+     * Cartea isi foloseste abilitatea.
+     *
+     * @param playerAttacker este player -ul care utilizeaza abilitatea cartii.
+     */
     public int cardUseAbility(final int xAttacker, final int yAttacker, final int xAttacked,
                               final int yAttacked, final Player playerAttacker) {
         int row;
@@ -148,13 +161,18 @@ public final class Board {
         }
         if (board.get(xAttacker).get(yAttacker) != null) {
             if (board.get(xAttacker).get(yAttacker).getName().equals("Disciple")) {
-                if (((xAttacker == 0 || xAttacker == 1) && (xAttacked == 0 || xAttacked == 1))
-                        || ((xAttacker == 2 || xAttacker == 3)
-                        && (xAttacked == 2 || xAttacked == 3))) {
+                if (((xAttacker == Constants.ROW0.getValue()
+                        || xAttacker == Constants.ROW1.getValue())
+                        && (xAttacked == Constants.ROW0.getValue()
+                        || xAttacked == Constants.ROW1.getValue()))
+                        || ((xAttacker == Constants.ROW2.getValue()
+                        || xAttacker == Constants.ROW3.getValue())
+                        && (xAttacked == Constants.ROW2.getValue()
+                        || xAttacked == Constants.ROW3.getValue()))) {
                     int health = board.get(xAttacked).get(yAttacked).getHealth();
                     board.get(xAttacked).get(yAttacked).setHealth(health + 2);
                 } else {
-                    return 3;
+                    return Constants.ERROR3.getValue();
                 }
             }
         }
@@ -163,15 +181,21 @@ public final class Board {
             if (board.get(xAttacker).get(yAttacker).getName().equals("The Ripper")
                     || board.get(xAttacker).get(yAttacker).getName().equals("Miraj")
                     || board.get(xAttacker).get(yAttacker).getName().equals("The Cursed One")) {
-                if (((xAttacker == 0 || xAttacker == 1) && (xAttacked == 0 || xAttacked == 1))
-                        || ((xAttacker == 2 || xAttacker == 3)
-                        && (xAttacked == 2 || xAttacked == 3))) {
-                    return 4;
+                if (((xAttacker == Constants.ROW0.getValue()
+                        || xAttacker == Constants.ROW1.getValue())
+                        && (xAttacked == Constants.ROW0.getValue()
+                        || xAttacked == Constants.ROW1.getValue()))
+                        || ((xAttacker == Constants.ROW2.getValue()
+                        || xAttacker == Constants.ROW3.getValue())
+                        && (xAttacked == Constants.ROW2.getValue()
+                        || xAttacked == Constants.ROW3.getValue()))) {
+                    return Constants.ERROR4.getValue();
                 }
-                if (xAttacker == 0 || xAttacker == 1) {
-                    row = 2;
+                if (xAttacker == Constants.ROW0.getValue()
+                        || xAttacker == Constants.ROW1.getValue()) {
+                    row = Constants.ROW2.getValue();
                 } else {
-                    row = 1;
+                    row = Constants.ROW1.getValue();
                 }
                 for (Minion card : board.get(row)) {
                     if (card != null && board.get(xAttacked).get(yAttacked) != null) {
@@ -179,7 +203,7 @@ public final class Board {
                                 && !(board.get(xAttacked).get(yAttacked).getName().equals("Goliath")
                                 || board.get(xAttacked).get(yAttacked).
                                 getName().equals("Warden"))) {
-                            return 5;
+                            return Constants.ERROR5.getValue();
                         }
                     }
                 }
@@ -214,14 +238,18 @@ public final class Board {
         }
         return 0;
     }
-
-    public int HeroAttack(final int xAttacker, final int yAttacker,
+    /**
+     * Se ataca eroul folosind o carte primita ca parametru.
+     *
+     * @param heroAttacked este eroul atacat
+     */
+    public int heroAttack(final int xAttacker, final int yAttacker,
                           final Hero heroAttacked, final Player playerAttacker) {
         if (playerAttacker.getFrozenCards().size() > 0) {
             for (Minion card : playerAttacker.getFrozenCards()) {
                 if (card != null) {
                     if (card == board.get(xAttacker).get(yAttacker)) {
-                        return 1;
+                        return Constants.ERROR1.getValue();
                     }
                 }
             }
@@ -230,21 +258,22 @@ public final class Board {
             for (Minion card : playerAttacker.getCardsUsed()) {
                 if (card != null) {
                     if (card == board.get(xAttacker).get(yAttacker)) {
-                        return 2;
+                        return Constants.ERROR2.getValue();
                     }
                 }
             }
         }
         int row;
-        if (xAttacker == 0 || xAttacker == 1) {
-            row = 2;
+        if (xAttacker == Constants.ROW0.getValue()
+                || xAttacker == Constants.ROW1.getValue()) {
+            row = Constants.ROW2.getValue();
         } else {
-            row = 1;
+            row = Constants.ROW1.getValue();
         }
         for (Minion card : board.get(row)) {
             if (card != null) {
                 if (card.getName().equals("Goliath") || card.getName().equals("Warden")) {
-                    return 3;
+                    return Constants.ERROR3.getValue();
                 }
             }
         }
@@ -259,28 +288,40 @@ public final class Board {
         }
         return 0;
     }
-    public int UseHeroAbility(final Hero heroAttacker, final int affectedRow,
+    /**
+     * Eroul isi foloseste abilitatea speciala.
+     *
+     * @param heroAttacker este eroul care ataca,
+     * @param affectedRow este randul atacat.
+     */
+    public int useHeroAbility(final Hero heroAttacker, final int affectedRow,
                               final Player player, final Player playerAttacked) {
         if (player.getMana() < heroAttacker.getMana()) {
-            return 1;
+            return Constants.ERROR1.getValue();
         }
         if (player.getHeroUsed() == 1) {
-            return 2;
+            return Constants.ERROR2.getValue();
         }
         if (heroAttacker.getName().equals("Lord Royce")
                 || heroAttacker.getName().equals("Empress Thorina")) {
-            if ((player.getPlayerIndex() == 1 && (affectedRow == Constants.ROW2.getValue()
+            if ((player.getPlayerIndex() == Constants.INDEXONE.getValue()
+                    && (affectedRow == Constants.ROW2.getValue()
                     || affectedRow == Constants.ROW3.getValue()))
-                    || (player.getPlayerIndex() == 2 && (affectedRow == Constants.ROW0.getValue()
+                    || (player.getPlayerIndex() == Constants.INDEXTWO.getValue()
+                    && (affectedRow == Constants.ROW0.getValue()
                     || affectedRow == Constants.ROW1.getValue()))) {
-                return 3;
+                return Constants.ERROR3.getValue();
             }
         }
         if (heroAttacker.getName().equals("General Kocioraw")
                 || heroAttacker.getName().equals("King Mudface")) {
-            if ((player.getPlayerIndex() == 1 && (affectedRow == 0 || affectedRow == 1))
-                    || (player.getPlayerIndex() == 2 && (affectedRow == 2 || affectedRow == 3))) {
-                return 4;
+            if ((player.getPlayerIndex() == Constants.INDEXONE.getValue()
+                    && (affectedRow == Constants.ROW0.getValue()
+                    || affectedRow == Constants.ROW1.getValue()))
+                    || (player.getPlayerIndex() == Constants.INDEXTWO.getValue()
+                    && (affectedRow == Constants.ROW2.getValue()
+                    || affectedRow == Constants.ROW3.getValue()))) {
+                return Constants.ERROR4.getValue();
             }
         }
         int mana = player.getMana();
@@ -289,8 +330,8 @@ public final class Board {
             for (Minion card : board.get(affectedRow)) {
                 int ok = 1;
                 if (!playerAttacked.getFrozenCards().isEmpty()) {
-                    for (Minion cardfrozen : playerAttacked.getFrozenCards()) {
-                        if (card == cardfrozen) {
+                    for (Minion cardFrozen : playerAttacked.getFrozenCards()) {
+                        if (card == cardFrozen) {
                             playerAttacked.addStillFrozenCard(card);
                             ok = 0;
                         }
