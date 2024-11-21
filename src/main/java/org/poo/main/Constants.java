@@ -17,14 +17,12 @@ public enum Constants {
     INDEXONE(1),
     INDEXTWO(2);
 
-    private final int value;  // Câmp pentru valoarea constantelor
+    private final int value;
 
-    // Constructor pentru enum
     Constants(final int value) {
         this.value = value;
     }
 
-    // Metodă pentru a obține valoarea constantelor
     public int getValue() {
         return value;
     }
