@@ -1,6 +1,8 @@
 package org.poo.main;
 
 
+import org.poo.card.Hero;
+import org.poo.card.Minion;
 import org.poo.fileio.CardInput;
 
 import java.util.ArrayList;

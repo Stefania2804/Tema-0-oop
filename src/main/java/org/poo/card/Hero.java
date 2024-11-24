@@ -1,6 +1,7 @@
-package org.poo.main;
+package org.poo.card;
 
 import org.poo.fileio.CardInput;
+import org.poo.main.Constants;
 
 public final class Hero  extends Card {
     public Hero(final CardInput cardInput) {

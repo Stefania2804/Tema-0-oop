@@ -1,4 +1,4 @@
-package org.poo.main;
+package org.poo.game;
 
 public final class Game {
 

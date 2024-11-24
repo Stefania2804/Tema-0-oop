@@ -1,10 +1,14 @@
-package org.poo.main;
+package org.poo.game;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.poo.card.Hero;
+import org.poo.card.Minion;
 import org.poo.fileio.CardInput;
 import org.poo.fileio.Coordinates;
+import org.poo.main.Constants;
+import org.poo.main.Player;
 
 import java.util.ArrayList;
 

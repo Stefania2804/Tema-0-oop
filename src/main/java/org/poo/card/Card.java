@@ -1,4 +1,4 @@
-package org.poo.main;
+package org.poo.card;
 
 import org.poo.fileio.CardInput;
 import java.util.ArrayList;
