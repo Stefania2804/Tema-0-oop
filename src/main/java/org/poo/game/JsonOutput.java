@@ -8,7 +8,6 @@ import org.poo.card.Minion;
 import org.poo.fileio.CardInput;
 import org.poo.fileio.Coordinates;
 import org.poo.main.Constants;
-import org.poo.main.Player;
 
 import java.util.ArrayList;
 

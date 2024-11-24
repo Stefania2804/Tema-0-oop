@@ -3,7 +3,6 @@ package org.poo.game;
 import org.poo.card.Hero;
 import org.poo.card.Minion;
 import org.poo.main.Constants;
-import org.poo.main.Player;
 
 import java.util.ArrayList;
 

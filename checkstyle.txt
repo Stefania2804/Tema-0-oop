@@ -1,7 +1,8 @@
 Starting audit...
-[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/game/JsonOutput.java:15:1: Utility classes should not have a public or default constructor. [HideUtilityClassConstructor]
-[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:15:22: Using the '.*' form of import should be avoided - org.poo.fileio.*. [AvoidStarImport]
-[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:74:5: Method length is 201 lines (max allowed is 150). [MethodLength]
-[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Player.java:39:42: 'index' hides a field. [HiddenField]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/game/JsonOutput.java:14:1: Utility classes should not have a public or default constructor. [HideUtilityClassConstructor]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/game/Player.java:39:42: 'index' hides a field. [HiddenField]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:9:20: Using the '.*' form of import should be avoided - org.poo.game.*. [AvoidStarImport]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:12:22: Using the '.*' form of import should be avoided - org.poo.fileio.*. [AvoidStarImport]
+[ERROR] /home/stefania/Desktop/Java/Tema-0-oop/./src/main/java/org/poo/main/Main.java:71:5: Method length is 201 lines (max allowed is 150). [MethodLength]
 Audit done.
-Checkstyle ends with 4 errors.
+Checkstyle ends with 5 errors.

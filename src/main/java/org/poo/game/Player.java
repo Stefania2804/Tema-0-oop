@@ -1,4 +1,4 @@
-package org.poo.main;
+package org.poo.game;
 
 
 import org.poo.card.Hero;
